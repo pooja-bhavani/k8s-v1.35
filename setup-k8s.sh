@@ -20,13 +20,18 @@ chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 echo "✅ Kind installed."
 
-# 4. Install Kubectl
-echo "☸️ Installing Kubectl..."
-K8S_VERSION="v1.34.0"
-curl -LO "https://dl.k8s.io/release/${K8S_VERSION}/bin/linux/amd64/kubectl"
-chmod +x ./kubectl
-sudo mv ./kubectl /usr/local/bin/kubectl
-echo "✅ Kubectl (${K8S_VERSION}) installed."
+# 4. Configure Kubernetes Apt Repository (v1.34)
+echo "☸️ Configuring Kubernetes Apt Repository..."
+sudo mkdir -p -m 755 /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo gpg --dearmor --yes -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+
+# 5. Install Kubectl, Kubeadm, Kubelet
+echo "📦 Installing Kubernetes components (v1.34)..."
+sudo apt-get install -y kubelet=1.34.0-1.1 kubeadm=1.34.0-1.1 kubectl=1.34.0-1.1
+sudo apt-mark hold kubelet kubeadm kubectl
+echo "✅ Kubernetes components installed and held at v1.34."
 
 echo ""
 echo "🎉 Setup Complete!"
