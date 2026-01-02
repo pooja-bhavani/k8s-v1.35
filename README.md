@@ -4,7 +4,7 @@ This repository contains a sample Node.js application and the necessary infrastr
 
 The included "Cluster Monitor" application provides real-time telemetry of pod distribution across nodes, allowing for the observation of pod rescheduling during maintenance operations.
 
-![cluster-monitor](screenshots/dashboard.png)
+![cluster-monitor](screenshots/dashboard1.png)
 
 ## Project Structure
 
