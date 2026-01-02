@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: k8s-demo-container
-        image: k8s-demo-app:v1.0.0 # Placeholder name
+        image: amitabhdevops/k8s-demo-app:v1.0.0
         ports:
         - containerPort: 3000
         env:
