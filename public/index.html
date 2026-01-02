@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8s Cluster Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-glow"></div>
+    <main class="container">
+        <header>
+            <div class="badge">Kubernetes v1.35 Ready</div>
+            <h1>Cluster <span class="accent">Monitor</span></h1>
+            <p class="subtitle">Real-time pod telemetry and system health</p>
+        </header>
+
+        <section class="statis-grid" id="info-grid">
+            <div class="card glass animate-in" style="--delay: 0.1s">
+                <div class="card-header">
+                    <span class="icon">📦</span>
+                    <h3>Pod Name</h3>
+                </div>
+                <div class="card-content">
+                    <p id="pod-name" class="loading">Loading...</p>
+                </div>
+            </div>
+
+            <div class="card glass animate-in" style="--delay: 0.2s">
+                <div class="card-header">
+                    <span class="icon">🖥️</span>
+                    <h3>Node Name</h3>
+                </div>
+                <div class="card-content">
+                    <p id="node-name" class="loading">Loading...</p>
+                </div>
+            </div>
+
+            <div class="card glass animate-in" style="--delay: 0.3s">
+                <div class="card-header">
+                    <span class="icon">🔖</span>
+                    <h3>Namespace</h3>
+                </div>
+                <div class="card-content">
+                    <p id="namespace" class="loading">Loading...</p>
+                </div>
+            </div>
+
+            <div class="card glass animate-in" style="--delay: 0.4s">
+                <div class="card-header">
+                    <span class="icon">🌐</span>
+                    <h3>Pod IP</h3>
+                </div>
+                <div class="card-content">
+                    <p id="pod-ip" class="loading">Loading...</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="system-stats glass animate-in" style="--delay: 0.5s">
+            <div class="section-header">
+                <h2>System Metrics</h2>
+                <div class="pulse-container">
+                    <span class="pulse"></span> Live
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <span class="label">Uptime</span>
+                    <span id="uptime" class="value">0s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Memory</span>
+                    <span id="memory" class="value">0 MB</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Arch</span>
+                    <span id="arch" class="value">...</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Designed for K8s Upgrade Demonstration</p>
+            <p class="timestamp" id="last-updated">Last update: --:--:--</p>
+        </footer>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
