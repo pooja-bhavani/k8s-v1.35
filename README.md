@@ -35,20 +35,22 @@ Prepare the host environment by installing the necessary tools:
 
 1. Build the container image:
    ```bash
-   docker build -t amitabhdevops/k8s-demo-app:v1.0.0 .
+   docker build -t <YOUR-DOCKERHUB-USERNAME>/k8s-demo-app:v1.0.0 .
    ```
 
-2. Load the image into the Kind cluster:
+2. Push the image to DockerHub:
    ```bash
-   kind load docker-image amitabhdevops/k8s-demo-app:v1.0.0 --name upgrade-demo
+   docker push <YOUR-DOCKERHUB-USERNAME>/k8s-demo-app:v1.0.0
    ```
 
-3. Deploy the application:
+3. Update the image in the k8s/manifests.yaml file
+
+4. Deploy the application:
    ```bash
    kubectl apply -f k8s/manifests.yaml
    ```
 
-4. Access the dashboard:
+5. Access the dashboard:
    Navigate to `http://<EC2-Public-IP>` in your browser. Ensure Port 80 is open in your AWS Security Group.
 
 ---
@@ -82,6 +84,11 @@ Configure the official Kubernetes Dashboard to provide a standard administrative
    kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443 --address 0.0.0.0
    ```
    Access via `https://<EC2-Public-IP>:8080`.
+
+5. Use the dashboard to monitor the cluster.
+   - Nodes Creation and version before and after upgrade
+   - Pods Creation and version before and after upgrade
+   - etc.
 
 ---
 
@@ -226,9 +233,9 @@ kubectl get nodes -o wide
 **Expected Output**: All nodes should report `STATUS: Ready` and `VERSION: v1.35.0`.
 
 ### Monitoring the Upgrade
-1. Monitor the **Cluster Monitor** dashboard during maintenance.
-2. Observe pod eviction and recreation on available nodes during worker upgrades.
-3. Verify that the application maintains availability throughout the rolling process.
+1. Monitor the **Cluster Monitor** dashboard(running on port 80) & Kubernetes Dashboard(running on port 8080) during maintenance, see the dashboard at https://<EC2-Public-IP>:8080.
+2. Observe pod eviction and recreation on available nodes during worker upgrades, see the versions of nodes and pods in the dashboard.
+3. Verify that the application running on port 80 maintains availability throughout the rolling process.
 
 ## Local Testing
 To run the application locally without Kubernetes:
