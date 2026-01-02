@@ -1,19 +1,19 @@
-# Kubernetes Cluster Upgrade Demonstration: v1.34 to v1.35
+# Kubernetes Cluster Upgrade: v1.34 to v1.35
 
-This repository provides a comprehensive environment and application to demonstrate a live Kubernetes cluster upgrade. It is specifically designed to showcase the transition from version 1.34 to 1.35 using a multi-node Kind cluster running on an AWS EC2 Ubuntu instance.
+This repository contains a sample Node.js application and the necessary infrastructure configurations to perform a Kubernetes cluster upgrade from version 1.34 to 1.35. The setup uses a multi-node Kind cluster running on an AWS EC2 Ubuntu instance.
 
-The project includes a "Cluster Monitor" application that provides real-time visual telemetry of pod distribution across nodes, making it an ideal tool for demonstrating zero-downtime upgrades and pod rescheduling.
+The included "Cluster Monitor" application provides real-time telemetry of pod distribution across nodes, allowing for the observation of pod rescheduling during maintenance operations.
 
 ## Project Structure
 
-- **Application**: A Node.js Express server with a high-performance telemetry dashboard.
+- **Application**: A Node.js Express server with a real-time telemetry dashboard.
 - **Containerization**: A multi-stage Dockerfile for an optimized runtime environment.
 - **Orchestration**: Kubernetes manifests defining a NodePort service and a Deployment with three replicas.
 - **Infrastructure**: Kind configuration for a 3-node cluster and an automated setup script for Ubuntu.
 
 ## Environment Preparation (Run on AWS EC2 Host)
 
-Before beginning the demonstration, prepare the host environment by installing the necessary tools.
+Prepare the host environment by installing the necessary tools:
 
 1. Execute the setup script:
    ```bash
@@ -21,7 +21,7 @@ Before beginning the demonstration, prepare the host environment by installing t
    ./setup-k8s.sh
    ```
 
-2. Refresh group membership for Docker (if not already done):
+2. Refresh group membership for Docker:
    ```bash
    newgrp docker
    ```
@@ -38,7 +38,7 @@ Before beginning the demonstration, prepare the host environment by installing t
    docker build -t amitabhdevops/k8s-demo-app:v1.0.0 .
    ```
 
-2. Load the image into the Kind cluster (recommended for local demo):
+2. Load the image into the Kind cluster:
    ```bash
    kind load docker-image amitabhdevops/k8s-demo-app:v1.0.0 --name upgrade-demo
    ```
@@ -49,13 +49,45 @@ Before beginning the demonstration, prepare the host environment by installing t
    ```
 
 4. Access the dashboard:
-   Navigate to `http://<EC2-Public-IP>` in your browser. Ensure Port 80 is open in your Security Group.
+   Navigate to `http://<EC2-Public-IP>` in your browser. Ensure Port 80 is open in your AWS Security Group.
+
+---
+
+## Official Kubernetes Dashboard Setup (Optional)
+
+Configure the official Kubernetes Dashboard to provide a standard administrative interface for the cluster.
+
+1. Install the Dashboard:
+   ```bash
+   kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+   ```
+
+2. Create a Service Account for Access:
+   ```bash
+   # Create service account
+   kubectl create serviceaccount admin-user -n kubernetes-dashboard
+
+   # Assign ClusterRoleBinding
+   kubectl create clusterrolebinding admin-user --clusterrole=cluster-admin --serviceaccount=kubernetes-dashboard:admin-user
+   ```
+
+3. Generate Access Token:
+   ```bash
+   kubectl -n kubernetes-dashboard create token admin-user
+   ```
+
+4. Access the Dashboard:
+   Use port forwarding in a separate session to access the interface securely:
+   ```bash
+   kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8080:443 --address 0.0.0.0
+   ```
+   Access via `https://<EC2-Public-IP>:8080`.
 
 ---
 
 ## The Upgrade Process (v1.34.0 to v1.35.0)
 
-Because Kind runs Kubernetes nodes inside Docker containers, the upgrade involves managing the host's kubectl and the internal components within each container node.
+Since Kind operates within Docker containers, all upgrade commands must be executed within the specific node containers to simulate a standard infrastructure upgrade.
 
 ### Phase 1: Control Plane Upgrade
 
@@ -182,9 +214,9 @@ kubectl uncordon upgrade-demo-worker2
 
 ---
 
-## Verification and Demonstration
+## Post-Upgrade Verification
 
-Once the upgrade process is complete, follow these steps to verify success and demonstrate the changes visually.
+Confirm the successful completion of the upgrade and monitor the environment state.
 
 ### Command Line Verification
 On your EC2 Host, check the cluster status:
@@ -193,11 +225,10 @@ kubectl get nodes -o wide
 ```
 **Expected Output**: All nodes should report `STATUS: Ready` and `VERSION: v1.35.0`.
 
-### Visual Demonstration
-1. Open the **Cluster Monitor** dashboard.
-2. During the worker upgrades, observe the pods being evicted and recreated on the remaining nodes.
-3. Note the **Node Name** update in the dashboard for each pod.
-4. Confirm that the application remained available (indicated by the **Live** pulse) throughout the entire rolling upgrade.
+### Monitoring the Upgrade
+1. Monitor the **Cluster Monitor** dashboard during maintenance.
+2. Observe pod eviction and recreation on available nodes during worker upgrades.
+3. Verify that the application maintains availability throughout the rolling process.
 
 ## Local Testing
 To run the application locally without Kubernetes:
