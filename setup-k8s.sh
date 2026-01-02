@@ -29,7 +29,7 @@ sudo apt update
 
 # 5. Install Kubectl, Kubeadm, Kubelet
 echo "📦 Installing Kubernetes components (v1.34)..."
-sudo apt-get install -y kubelet=1.34.0-1.1 kubeadm=1.34.0-1.1 kubectl=1.34.0-1.1
+sudo apt-get install -y --allow-downgrades kubelet=1.34.0-1.1 kubeadm=1.34.0-1.1 kubectl=1.34.0-1.1
 sudo apt-mark hold kubelet kubeadm kubectl
 echo "✅ Kubernetes components installed and held at v1.34."
 
