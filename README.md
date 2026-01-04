@@ -101,6 +101,8 @@ Configure the official Kubernetes Dashboard to provide a standard administrative
    kubectl -n kubernetes-dashboard create token admin-user
    ```
 
+   <img width="2929" height="850" alt="image" src="https://github.com/user-attachments/assets/956a0010-7374-4068-879e-31c1fdae1a08" />
+
 4. Access the Dashboard:
    Use port forwarding in a separate session to access the interface securely:
    ```bash
