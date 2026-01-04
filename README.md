@@ -29,14 +29,13 @@ Prepare the host environment by installing the necessary tools:
 
 3. Execute the setup script:
 
- **This setup script installs all necessary tools**
-##### Run setup (installs Docker, kubectl, kind, etc.) 
+   **This setup script installs all necessary tools**
+   **Run setup (installs Docker, kubectl, kind, etc.)** 
 
-    ```bash
+   ```bash
    chmod +x setup-k8s.sh
    ./setup-k8s.sh
    ```
-   
 
 5. Refresh group membership for Docker:
    ```bash
@@ -44,6 +43,8 @@ Prepare the host environment by installing the necessary tools:
    ```
 
 6. Initialize the v1.34 cluster:
+   **The cluster is running v1.34.0 on one control plane and two workers.**
+   
    ```bash
    kind create cluster --config kind-config.yaml --name upgrade-demo
    ```
