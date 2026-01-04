@@ -51,7 +51,7 @@ Prepare the host environment by installing the necessary tools:
    kubectl get nodes -o wide
    ```
 
-   <img width="2137" height="581" alt="image" src="https://github.com/user-attachments/assets/45fd7e1a-00c2-43d5-81e6-42a2c5d77c71" />
+<img width="2137" height="573" alt="image" src="https://github.com/user-attachments/assets/dbaf0546-f8e3-4518-81cf-3c679eff445b" />
 
 
 ## Application Deployment (Run on AWS EC2 Host)
