@@ -128,6 +128,7 @@ Since Kind operates within Docker containers, all upgrade commands must be execu
 ```bash
 kubectl drain upgrade-demo-control-plane --ignore-daemonsets --delete-emptydir-data
 ```
+<img width="2925" height="338" alt="image" src="https://github.com/user-attachments/assets/62a7ed14-a7da-469d-8240-7b9d571d1530" />
 
 **Step 2: Enter the node container (Run on EC2 Host)**
 ```bash
