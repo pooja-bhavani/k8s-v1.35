@@ -19,7 +19,7 @@ Prepare the host environment by installing the necessary tools:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Amitabh-DevOps/k8s-v1.35.git
+   git clone https://github.com/pooja-bhavani/k8s-v1.35.git
    ```
 
 2. Change directory to the repository:
@@ -28,17 +28,22 @@ Prepare the host environment by installing the necessary tools:
    ```
 
 3. Execute the setup script:
-   ```bash
+
+ **This setup script installs all necessary tools**
+##### Run setup (installs Docker, kubectl, kind, etc.) 
+
+    ```bash
    chmod +x setup-k8s.sh
    ./setup-k8s.sh
    ```
+   
 
-4. Refresh group membership for Docker:
+5. Refresh group membership for Docker:
    ```bash
    newgrp docker
    ```
 
-5. Initialize the v1.34 cluster:
+6. Initialize the v1.34 cluster:
    ```bash
    kind create cluster --config kind-config.yaml --name upgrade-demo
    ```
