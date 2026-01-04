@@ -43,6 +43,7 @@ Prepare the host environment by installing the necessary tools:
    ```
 
 6. Initialize the v1.34 cluster:
+   
    **The cluster is running v1.34.0 on one control plane and two workers.**
    
    ```bash
