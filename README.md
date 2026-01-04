@@ -48,7 +48,11 @@ Prepare the host environment by installing the necessary tools:
    
    ```bash
    kind create cluster --config kind-config.yaml --name upgrade-demo
+   kubectl get nodes -o wide
    ```
+
+   <img width="2137" height="581" alt="image" src="https://github.com/user-attachments/assets/45fd7e1a-00c2-43d5-81e6-42a2c5d77c71" />
+
 
 ## Application Deployment (Run on AWS EC2 Host)
 
